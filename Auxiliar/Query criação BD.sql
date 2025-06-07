@@ -60,3 +60,42 @@ foreign key (id_sessao) references sessao(id_sessao),
 foreign key (id_area) references Area(id_area)
 );
 
+INSERT INTO horario (turno, hora_inicio, hora_fim) VALUES
+('Manhã', '08:00:00', '09:30:00'),
+('Manhã', '09:45:00', '11:15:00'),
+('Manhã', '11:30:00', '13:00:00'),
+
+('Tarde', '13:30:00', '15:00:00'),
+('Tarde', '15:15:00', '16:45:00'),
+('Tarde', '17:00:00', '18:30:00'),
+
+('Noite', '19:00:00', '20:30:00'),
+('Noite', '20:45:00', '22:15:00'),
+('Noite', '22:30:00', '00:00:00');
+
+INSERT INTO peca (nome) VALUES
+('Romeu e Julieta'),
+('O Auto da Compadecida'),
+('Chapeuzinho Vermelho');
+
+INSERT INTO sessao (id_peca, id_horario) VALUES
+(1, 1),  -- Romeu e Julieta - Manhã
+(2, 2),  -- Auto da Compadecida - Manhã
+(3, 3),  -- Chapeuzinho Vermelho - Manhã
+
+(1, 4),  -- Romeu e Julieta - Tarde
+(2, 5),  -- Auto da Compadecida - Tarde
+(3, 6),  -- Chapeuzinho Vermelho - Tarde
+
+(1, 7),  -- Romeu e Julieta - Noite
+(2, 8),  -- Auto da Compadecida - Noite
+(3, 9);  -- Chapeuzinho Vermelho - Noite
+
+select * from area;
+
+INSERT INTO area(nome, qtd_poltronas, preco) VALUES
+('Plateia A', 25, 40),
+('Plateia B', 100, 60),
+('Frisa', 30, 120),
+('Camarote', 50, 80),
+('Balcão Nobre', 50, 250);
