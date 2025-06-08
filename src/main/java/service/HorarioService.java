@@ -31,7 +31,7 @@ public class HorarioService {
         return horariosMap.get(id);
     }
 
-    public Map<Integer, Area> getTodosHorarios() {
+    public Map<Integer, Horario> getTodosHorarios() {
         return horariosMap;
     }
 }

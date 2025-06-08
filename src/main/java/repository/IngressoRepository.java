@@ -53,14 +53,21 @@ public class IngressoRepository {
     public void salvarIngresso(Ingresso ingresso) throws SQLException {
         String sql = "INSERT INTO ingresso (id_usuario, id_sessao, id_area, posicaoPoltrona, valor_pago) VALUES (?, ?, ?, ?, ?)";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, ingresso.getUsuario().getIdUsuario());
             ps.setInt(2, ingresso.getSessao().getIdSessao());
             ps.setInt(3, ingresso.getArea().getIdArea());
             ps.setInt(4, ingresso.getPosicaoPoltrona());
             ps.setInt(5, ingresso.getValorPago());
+
             ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    int idGerado = rs.getInt(1);
+                    ingresso.setIdIngresso(idGerado);
+                }
+            }
         }
     }
-
 }

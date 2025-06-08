@@ -33,20 +33,27 @@ public class EnderecoRepository {
                 enderecosMap.put(id, endereco);
             }
         }
-
         return enderecosMap;
     }
 
     public void salvarEndereco(Endereco endereco) throws SQLException {
         String sql = "INSERT INTO endereco (rua, quadra, lote, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, endereco.getRua());
             ps.setString(2, endereco.getQuadra());
             ps.setString(3, endereco.getLote());
             ps.setString(4, endereco.getBairro());
             ps.setString(5, endereco.getCidade());
             ps.setString(6, endereco.getEstado());
+
             ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    int idGerado = rs.getInt(1);
+                    endereco.setIdEndereco(idGerado);
+                }
+            }
         }
     }
 }

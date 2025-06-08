@@ -27,7 +27,7 @@ public class HorarioRepository {
                 LocalTime horaInicio = rs.getTime("hora_inicio").toLocalTime();
                 LocalTime horaFim = rs.getTime("hora_fim").toLocalTime();
 
-                Horario horario = new Horario(idHorario, turno, horaInicio, horaFim);
+                Horario horario = new Horario(turno, horaInicio, horaFim);
                 horariosMap.put(idHorario, horario);
             }
         }

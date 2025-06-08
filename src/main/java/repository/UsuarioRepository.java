@@ -42,16 +42,23 @@ public class UsuarioRepository {
         return usuariosMap;
     }
 
-    public void salvarUsuario(Usuario usuario){
+    public void salvarUsuario(Usuario usuario) {
         String sql = "INSERT INTO usuario (id_endereco, nome, cpf, telefone, data_nasc) VALUES (?, ?, ?, ?, ?)";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, usuario.getEndereco().getIdEndereco());
             ps.setString(2, usuario.getNome());
             ps.setString(3, usuario.getCpf());
             ps.setString(4, usuario.getTelefone());
             ps.setDate(5, Date.valueOf(usuario.getDataNasc()));
             ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    int idGerado = rs.getInt(1);
+                    usuario.setIdUsuario(idGerado);
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

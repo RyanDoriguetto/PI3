@@ -38,10 +38,6 @@ public class UsuarioService {
     }
 
     public void salvarUsuario(Endereco endereco, String nome, String cpf, String telefone, LocalDate dataNasc){
-        if(!UsuarioUtil.validarCpf(cpf)){
-            throw new IllegalArgumentException("CPF Inválido");
-        }
-
         Usuario usuario = new Usuario(0, endereco, nome, cpf, telefone, dataNasc);
         usuarioRepo.salvarUsuario(usuario);
     }

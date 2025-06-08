@@ -26,6 +26,16 @@ public class EnderecoService {
         }
     }
 
+    public void salvarEndereco(Endereco endereco) throws SQLException {
+        if (endereco.getRua().isEmpty() || endereco.getBairro().isEmpty() ||
+                endereco.getCidade().isEmpty() || endereco.getEstado().isEmpty()) {
+            throw new IllegalArgumentException("Campos obrigatórios do endereço não podem estar vazios");
+        }
+
+        enderecoRepo.salvarEndereco(endereco);
+    }
+
+
     public Endereco getEnderecoPorId(int id) {
         return enderecosMap.get(id);
     }

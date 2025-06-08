@@ -18,6 +18,13 @@ public abstract class Ingresso {
         this.posicaoPoltrona = posicaoPoltrona;
     }
 
+    public Ingresso(Usuario usuario, Sessao sessao, Area area, int posicaoPoltrona) {
+        this.usuario = usuario;
+        this.sessao = sessao;
+        this.area = area;
+        this.posicaoPoltrona = posicaoPoltrona;
+    }
+
     public Area getArea() {
         return area;
     }
