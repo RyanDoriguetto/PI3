@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HorarioRepository {
     private Connection connection;
@@ -15,19 +17,23 @@ public class HorarioRepository {
         this.connection = connection;
     }
 
-    public Horario buscarPorId(int idHorario) throws SQLException {
-        String sql = "SELECT id_horario, turno, hora_inicio, hora_fim FROM horario WHERE id_horario = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, idHorario);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    String turno = rs.getString("turno");
-                    LocalTime horaInicio = rs.getTime("hora_inicio").toLocalTime();
-                    LocalTime horaFim = rs.getTime("hora_fim").toLocalTime();
-                    return new Horario(idHorario, turno, horaInicio, horaFim);
-                }
+    public Map<Integer, Horario> buscarTodosHorarios() throws SQLException {
+        String sql = "SELECT id_horario, turno, hora_inicio, hora_fim FROM horario";
+        Map<Integer, Horario> horariosMap = new HashMap<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                int idHorario = rs.getInt("id_horario");
+                String turno = rs.getString("turno");
+                LocalTime horaInicio = rs.getTime("hora_inicio").toLocalTime();
+                LocalTime horaFim = rs.getTime("hora_fim").toLocalTime();
+
+                Horario horario = new Horario(idHorario, turno, horaInicio, horaFim);
+                horariosMap.put(idHorario, horario);
             }
         }
-        return null;
+        return horariosMap;
     }
 }

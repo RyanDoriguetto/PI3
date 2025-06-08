@@ -9,17 +9,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AreaService {
-    private AreaRepository repo;
+    private AreaRepository areaRepo;
     private Map<Integer, Area> areasMap;
 
     public AreaService(Connection connection) {
-        this.repo = new AreaRepository(connection);
+        this.areaRepo = new AreaRepository(connection);
         carregarAreas();
     }
 
     private void carregarAreas() {
         try {
-            areasMap = repo.buscarTodasAreas();
+            areasMap = areaRepo.buscarTodasAreas();
         } catch (SQLException e) {
             e.printStackTrace();
             areasMap = new HashMap<>();

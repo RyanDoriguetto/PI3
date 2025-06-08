@@ -1,6 +1,8 @@
 package repository;
 
 import model.*;
+import service.HorarioService;
+import service.PecaService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,13 +13,13 @@ import java.util.Map;
 
 public class SessaoRepository {
     private Connection connection;
-    private PecaRepository pecaRepo;
-    private HorarioRepository horarioRepo;
+    private PecaService pecaService;
+    private HorarioService horarioService;
 
-    public SessaoRepository(Connection connection, PecaRepository pecaRepo, HorarioRepository horarioRepo) {
+    public SessaoRepository(Connection connection, PecaService pecaService, HorarioService horarioService) {
         this.connection = connection;
-        this.pecaRepo = pecaRepo;
-        this.horarioRepo = horarioRepo;
+        this.pecaService = pecaService;
+        this.horarioService = horarioService;
     }
 
     public Map<Integer, Sessao> buscarTodasSessoes() throws SQLException {
@@ -32,8 +34,8 @@ public class SessaoRepository {
                 int idPeca = rs.getInt("id_peca");
                 int idHorario = rs.getInt("id_horario");
 
-                Peca peca = pecaRepo.buscarPorId(idPeca);
-                Horario horario = horarioRepo.buscarPorId(idHorario);
+                Peca peca = pecaService.getPecaPorId(idPeca);
+                Horario horario = horarioService.getHorarioPorId(idHorario);
 
                 Sessao sessao = new Sessao(idSessao, peca, horario);
                 sessoesMap.put(idSessao, sessao);
