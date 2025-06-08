@@ -13,4 +13,9 @@ public class Camarote extends Ingresso {
     public int getNumeroCamarote() {
         return numeroCamarote;
     }
+
+    @Override
+    public String toString() {
+        return "Camarote #" + numeroCamarote + " - " + super.toString();
+    }
 }

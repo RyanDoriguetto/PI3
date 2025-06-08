@@ -13,5 +13,10 @@ public class Frisa extends Ingresso {
     public int getNumeroFrisa() {
         return numeroFrisa;
     }
+
+    @Override
+    public String toString() {
+        return "Frisa #" + numeroFrisa + " - " + super.toString();
+    }
 }
 

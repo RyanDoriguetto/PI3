@@ -8,4 +8,9 @@ public class PlateiaA extends Ingresso{
         super(idIngresso, usuario, sessao, area, posicaoPoltrona);
         this.valorPago = area.getPreco();
     }
+
+    @Override
+    public String toString() {
+        return "Plateia A - " + super.toString();
+    }
 }
