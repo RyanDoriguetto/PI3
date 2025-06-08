@@ -1,18 +1,11 @@
 package repository;
 
 import factory.IngressoFactory;
-import model.Area;
-import model.Sessao;
-import model.Usuario;
+import model.*;
 import model.ingresso.Ingresso;
-import service.AreaService;
-import service.SessaoService;
-import service.UsuarioService;
+import service.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,4 +49,18 @@ public class IngressoRepository {
         }
         return ingressosMap;
     }
+
+    public void salvarIngresso(Ingresso ingresso) throws SQLException {
+        String sql = "INSERT INTO ingresso (id_usuario, id_sessao, id_area, posicaoPoltrona, valor_pago) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, ingresso.getUsuario().getIdUsuario());
+            ps.setInt(2, ingresso.getSessao().getIdSessao());
+            ps.setInt(3, ingresso.getArea().getIdArea());
+            ps.setInt(4, ingresso.getPosicaoPoltrona());
+            ps.setInt(5, ingresso.getValorPago());
+            ps.executeUpdate();
+        }
+    }
+
 }

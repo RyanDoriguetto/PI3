@@ -42,6 +42,10 @@ public abstract class Ingresso {
         return posicaoPoltrona;
     }
 
+    public void setIdIngresso(int idIngresso) {
+        this.idIngresso = idIngresso;
+    }
+
     @Override
     public String toString() {
         return "ID: " + idIngresso + ", Usuário: " + usuario.getNome() +

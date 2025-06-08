@@ -47,6 +47,10 @@ public class Endereco {
         return estado;
     }
 
+    public void setIdEndereco(int idEndereco) {
+        this.idEndereco = idEndereco;
+    }
+
     @Override
     public String toString() {
         return "    Rua: " + rua + "\n" +

@@ -29,6 +29,10 @@ public class Area {
         return nome;
     }
 
+    public int getIdArea() {
+        return idArea;
+    }
+
     public int getQtdPoltronas() {
         return qtdPoltronas;
     }

@@ -2,10 +2,7 @@ package repository;
 
 import model.Endereco;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,5 +35,18 @@ public class EnderecoRepository {
         }
 
         return enderecosMap;
+    }
+
+    public void salvarEndereco(Endereco endereco) throws SQLException {
+        String sql = "INSERT INTO endereco (rua, quadra, lote, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, endereco.getRua());
+            ps.setString(2, endereco.getQuadra());
+            ps.setString(3, endereco.getLote());
+            ps.setString(4, endereco.getBairro());
+            ps.setString(5, endereco.getCidade());
+            ps.setString(6, endereco.getEstado());
+            ps.executeUpdate();
+        }
     }
 }

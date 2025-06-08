@@ -19,6 +19,10 @@ public class Usuario {
         this.dataNasc = dataNasc;
     }
 
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
     public Endereco getEndereco() {
         return endereco;
     }
