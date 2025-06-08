@@ -2,6 +2,7 @@ package factory;
 
 import model.*;
 import model.ingresso.*;
+import util.IngressoUtil;
 
 import java.util.Map;
 
@@ -12,7 +13,7 @@ public class IngressoFactory {
         this.areasMap = areasMap;
     }
 
-    public Ingresso criarIngresso(int idIngresso, Usuario usuario, Sessao sessao, int idArea, int posicaoPoltrona, int numeroSubarea) {
+    public Ingresso criarIngresso(int idIngresso, Usuario usuario, Sessao sessao, int idArea, int posicaoPoltrona) {
         Area area = areasMap.get(idArea);
         if (area == null) {
             throw new IllegalArgumentException("Área inválida");
@@ -20,21 +21,27 @@ public class IngressoFactory {
 
         switch (area.getNome()) {
             case "Plateia A":
-                return new PlateiaA(idIngresso, usuario, sessao, area, posicaoPoltrona);
+                return new IngressoPlateiaA(idIngresso, usuario, sessao, area, posicaoPoltrona);
             case "Plateia B":
-                return new PlateiaB(idIngresso, usuario, sessao, area, posicaoPoltrona);
+                return new IngressoPlateiaB(idIngresso, usuario, sessao, area, posicaoPoltrona);
             case "Balcao Nobre":
-                return new BalcaoNobre(idIngresso, usuario, sessao, area, posicaoPoltrona);
+                return new IngressoBalcaoNobre(idIngresso, usuario, sessao, area, posicaoPoltrona);
             case "Frisa":
-                if (numeroSubarea < 1 || numeroSubarea > area.getQtdSubareas()) {
+                int numeroSubareaFrisa = IngressoUtil.calcularNumeroSubarea(area, posicaoPoltrona);
+
+                if (numeroSubareaFrisa < 1 || numeroSubareaFrisa > area.getQtdSubareas()) {
                     throw new IllegalArgumentException("Número de frisa inválido");
                 }
-                return new Frisa(idIngresso, usuario, sessao, area, posicaoPoltrona, numeroSubarea);
+
+                return new IngressoFrisa(idIngresso, usuario, sessao, area, posicaoPoltrona, numeroSubareaFrisa);
             case "Camarote":
-                if (numeroSubarea < 1 || numeroSubarea > area.getQtdSubareas()) {
+                int numeroSubareaCamarote = IngressoUtil.calcularNumeroSubarea(area, posicaoPoltrona);
+
+                if (numeroSubareaCamarote < 1 || numeroSubareaCamarote > area.getQtdSubareas()) {
                     throw new IllegalArgumentException("Número de camarote inválido");
                 }
-                return new Camarote(idIngresso, usuario, sessao, area, posicaoPoltrona, numeroSubarea);
+
+                return new IngressoCamarote(idIngresso, usuario, sessao, area, posicaoPoltrona, numeroSubareaCamarote);
             default:
                 throw new IllegalArgumentException("Área não reconhecida");
         }

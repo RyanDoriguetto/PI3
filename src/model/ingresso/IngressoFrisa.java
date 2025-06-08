@@ -2,9 +2,9 @@ package model.ingresso;
 
 import model.*;
 
-public class Frisa extends Ingresso {
+public class IngressoFrisa extends Ingresso {
     private int numeroFrisa;
-    public Frisa(int idIngresso, Usuario usuario, Sessao sessao, Area area, int posicaoPoltrona, int numeroFrisa) {
+    public IngressoFrisa(int idIngresso, Usuario usuario, Sessao sessao, Area area, int posicaoPoltrona, int numeroFrisa) {
         super(idIngresso, usuario, sessao, area, posicaoPoltrona);
         this.numeroFrisa = numeroFrisa;
         this.valorPago = area.getPreco();

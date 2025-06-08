@@ -2,15 +2,15 @@ package model.ingresso;
 
 import model.*;
 
-public class BalcaoNobre extends Ingresso{
+public class IngressoPlateiaA extends Ingresso{
 
-    public BalcaoNobre(int idIngresso, Usuario usuario, Sessao sessao, Area area, int posicaoPoltrona) {
+    public IngressoPlateiaA(int idIngresso, Usuario usuario, Sessao sessao, Area area, int posicaoPoltrona) {
         super(idIngresso, usuario, sessao, area, posicaoPoltrona);
         this.valorPago = area.getPreco();
     }
 
     @Override
     public String toString() {
-        return "Balcão Nobre - " + super.toString();
+        return "Plateia A - " + super.toString();
     }
 }
