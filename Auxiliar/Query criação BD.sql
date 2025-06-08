@@ -90,7 +90,6 @@ INSERT INTO sessao (id_peca, id_horario) VALUES
 (1, 7),  -- Romeu e Julieta - Noite
 (2, 8),  -- Auto da Compadecida - Noite
 (3, 9);  -- Chapeuzinho Vermelho - Noite
-
 select * from area;
 
 INSERT INTO area(nome, qtd_poltronas, preco) VALUES
@@ -98,4 +97,11 @@ INSERT INTO area(nome, qtd_poltronas, preco) VALUES
 ('Plateia B', 100, 60),
 ('Frisa', 30, 120),
 ('Camarote', 50, 80),
-('Balcão Nobre', 50, 250);
+('Balcao Nobre', 50, 250);
+
+ALTER TABLE area
+ADD COLUMN qtd_subareas INT DEFAULT 0,
+ADD COLUMN assentos_por_subarea INT DEFAULT 0;
+
+UPDATE area SET qtd_subareas = 6, assentos_por_subarea = 5 WHERE id_area = 3;
+UPDATE area SET qtd_subareas = 5, assentos_por_subarea = 10 WHERE id_area = 4;

@@ -5,16 +5,24 @@ public class Area {
     private String nome;
     private int qtdPoltronas;
     private int preco;
+    private int qtdSubareas;
+    private int assentosPorSubarea;
 
-    public Area(int idArea, String nome, int qtdPoltronas, int preco) {
+    public Area(int idArea, String nome, int qtdPoltronas, int preco, int qtdSubareas, int assentosPorSubarea) {
         this.idArea = idArea;
         this.nome = nome;
         this.qtdPoltronas = qtdPoltronas;
         this.preco = preco;
+        this.qtdSubareas = qtdSubareas;
+        this.assentosPorSubarea = assentosPorSubarea;
     }
 
-    public int getIdArea() {
-        return idArea;
+    public int getQtdSubareas() {
+        return qtdSubareas;
+    }
+
+    public int getAssentosPorSubarea() {
+        return assentosPorSubarea;
     }
 
     public String getNome() {
