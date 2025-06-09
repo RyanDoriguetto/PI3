@@ -18,7 +18,7 @@ import java.time.format.DateTimeParseException;
 
 public class CadastroUsuarioView {
 
-
+        public static void exibir(){
         Stage stage = new Stage();
         stage.setTitle("Cadastro de Usuário");
 
