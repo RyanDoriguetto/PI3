@@ -1,5 +1,5 @@
 package view;
 
-public class EstatisticaView {
+public class ImpressaoIngressoView {
     public static void exibir() {}
 }

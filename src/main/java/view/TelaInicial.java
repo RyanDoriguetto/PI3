@@ -39,9 +39,9 @@ public class TelaInicial extends Application {
         Button btnEstatisticas = new Button("Estatística de Vendas");
 
         btnCadastro.setOnAction(e -> CadastroUsuarioView.exibir());
-        btnComprar.setOnAction(e -> System.out.println("Comprar ingresso clicado"));
-        btnImprimir.setOnAction(e -> System.out.println("Imprimir ingresso clicado"));
-        btnEstatisticas.setOnAction(e -> System.out.println("Estatística de Vendas clicado"));
+        btnComprar.setOnAction(e -> CompraIngressoView.exibir());
+        btnImprimir.setOnAction(e -> ImpressaoIngressoView.exibir());
+        btnEstatisticas.setOnAction(e -> EstatisticaView.exibir());
 
         VBox root = new VBox(20);
         root.setAlignment(Pos.CENTER);
