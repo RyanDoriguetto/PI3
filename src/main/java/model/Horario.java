@@ -8,7 +8,7 @@ public class Horario {
     private LocalTime horaInicio;
     private LocalTime horaFim;
 
-    public Horario(String turno, LocalTime horaInicio, LocalTime horaFim) {
+    public Horario(int idHorario,String turno, LocalTime horaInicio, LocalTime horaFim) {
         this.idHorario = idHorario;
         this.turno = turno;
         this.horaInicio = horaInicio;
@@ -29,6 +29,10 @@ public class Horario {
 
     public LocalTime getHoraFim() {
         return horaFim;
+    }
+
+    public String getHorario() {
+        return horaInicio.toString() + " - " + horaFim.toString();
     }
 
     @Override

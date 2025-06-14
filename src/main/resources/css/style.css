@@ -1,0 +1,20 @@
+.botao-peca {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.botao-peca:selected {
+    -fx-background-color: transparent;
+    -fx-border-color: #1E90FF;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+}
+
+.botao-horario:selected,
+.botao-area:selected {
+    -fx-background-color: #cce4ff;
+    -fx-border-color: #1E90FF;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+}

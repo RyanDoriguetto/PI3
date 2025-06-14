@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaInicialController">
+
+    <children>
+        <Label text="Bem-vindo ao Teatro ABC!" />
+
+        <ImageView fx:id="imagemTeatro" fitWidth="400" fitHeight="200" preserveRatio="true" />
+
+        <Label fx:id="imagemErro" text="Imagem não encontrada" visible="false" />
+
+        <Button fx:id="btnCadastro" text="Cadastrar usuário" onAction="#handleCadastro"/>
+        <Button fx:id="btnComprar" text="Comprar ingresso" onAction="#handleCompraIngresso"/>
+        <Button fx:id="btnImprimir" text="Imprimir ingresso" />
+        <Button fx:id="btnEstatisticas" text="Estatística de Vendas" />
+    </children>
+</VBox>

@@ -6,7 +6,9 @@ import repository.SessaoRepository;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SessaoService {
     private SessaoRepository sessaoRepo;
@@ -32,5 +34,21 @@ public class SessaoService {
 
     public Map<Integer, Sessao> getTodasSessoes() {
         return sessoesMap;
+    }
+
+    public List<Integer> getHorariosPorPeca(int idPeca) {
+        return sessoesMap.values().stream()
+                .filter(s -> s.getPeca().getIdPeca() == idPeca)
+                .map(s -> s.getHorario().getIdHorario())
+                .distinct()
+                .toList();
+    }
+
+    public Map<Integer, List<Integer>> getPecasHorariosMap() {
+        return sessoesMap.values().stream()
+                .collect(Collectors.groupingBy(
+                        s -> s.getPeca().getIdPeca(),
+                        Collectors.mapping(s -> s.getHorario().getIdHorario(), Collectors.toList())
+                ));
     }
 }
