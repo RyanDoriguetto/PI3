@@ -43,7 +43,7 @@ public class TelaInicialController {
     @FXML
     public void handleCompraIngresso() {
         try {
-            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/view/CompraIngressoView.fxml"));
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/view/SelecaoCompraView.fxml"));
             javafx.scene.Parent root = loader.load();
             App.rootPane.getChildren().setAll(root);
         } catch (Exception e) {
