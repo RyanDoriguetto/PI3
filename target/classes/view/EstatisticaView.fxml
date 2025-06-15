@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="700" prefWidth="600" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EstatisticaController">
+
+    <center>
+        <VBox alignment="CENTER" prefHeight="533.0" prefWidth="600" spacing="10">
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="20" />
+            </padding>
+
+            <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="Peça Mais Vendida:" />
+            <Label fx:id="lblPecaMaisVendida" style="-fx-font-weight: normal; -fx-font-size: 13px;" />
+
+            <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="Peça Menos Vendida:" />
+            <Label fx:id="lblPecaMenosVendida" style="-fx-font-weight: normal; -fx-font-size: 13px;" />
+
+            <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="Sessão Mais Ocupada:" />
+            <Label fx:id="lblSessaoMaisOcupada" style="-fx-font-weight: normal; -fx-font-size: 13px;" />
+
+            <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="Sessão Menos Ocupada:" />
+            <Label fx:id="lblSessaoMenosOcupada" style="-fx-font-weight: normal; -fx-font-size: 13px;" />
+
+            <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="Sessão Mais Lucrativa:" />
+            <Label fx:id="lblSessaoMaisLucrativa" style="-fx-font-weight: normal; -fx-font-size: 13px;" />
+
+            <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="Sessão Menos Lucrativa:" />
+            <Label fx:id="lblSessaoMenosLucrativa" style="-fx-font-weight: normal; -fx-font-size: 13px;" />
+
+            <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="Faturamento Médio por Peça:" />
+            <VBox fx:id="vboxFaturamento" alignment="TOP_LEFT" prefWidth="400" spacing="5" />
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_LEFT" spacing="10" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <Button fx:id="btnVoltar" onAction="#handleVoltar" text="Voltar" />
+        </HBox>
+    </bottom>
+   <top>
+      <HBox alignment="CENTER" prefHeight="78.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="135.0" fitWidth="446.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true">
+               <image>
+                  <Image url="@images/estatistica.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+   </top>
+
+</BorderPane>
