@@ -109,3 +109,23 @@ UPDATE area SET qtd_subareas = 5, assentos_por_subarea = 10 WHERE id_area = 4;
 use pi2025;
 
 ALTER TABLE ingresso MODIFY COLUMN posicaoPoltrona VARCHAR(10) NOT NULL;
+
+-- CONSULTA PEÇA MAIS VENDIDA:
+
+SELECT p.id_peca, p.nome, COUNT(i.id_ingresso) AS total_vendidos
+FROM ingresso i
+JOIN sessao s ON i.id_sessao = s.id_sessao
+JOIN peca p ON s.id_peca = p.id_peca
+GROUP BY p.id_peca, p.nome
+ORDER BY total_vendidos DESC
+LIMIT 1;
+
+-- CONSULTA PEÇA MENOS VENDIDA:
+
+SELECT p.id_peca, p.nome, COUNT(i.id_ingresso) AS total_vendidos
+FROM ingresso i
+JOIN sessao s ON i.id_sessao = s.id_sessao
+JOIN peca p ON s.id_peca = p.id_peca
+GROUP BY p.id_peca, p.nome
+ORDER BY total_vendidos ASC
+LIMIT 1;

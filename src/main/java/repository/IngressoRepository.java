@@ -67,7 +67,16 @@ public class IngressoRepository {
             e.printStackTrace();
         }
 
+
         return reservadas;
+    }
+
+    public void deletarIngresso(int idIngresso) throws SQLException {
+        String sql = "DELETE FROM ingresso WHERE id_ingresso = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idIngresso);
+            stmt.executeUpdate();
+        }
     }
 
     public void salvarIngresso(Ingresso ingresso) throws SQLException {
@@ -89,5 +98,31 @@ public class IngressoRepository {
                 }
             }
         }
+    }
+
+    public List<Ingresso> buscarIngressosPorUsuario(int idUsuario) throws SQLException {
+        String sql = "SELECT id_ingresso, id_usuario, id_sessao, id_area, posicaoPoltrona, valor_pago FROM ingresso WHERE id_usuario = ?";
+        List<Ingresso> ingressos = new ArrayList<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int idIngresso = rs.getInt("id_ingresso");
+                int idSessao = rs.getInt("id_sessao");
+                int idArea = rs.getInt("id_area");
+                String posicaoPoltrona = rs.getString("posicaoPoltrona");
+
+                Usuario usuario = usuarioService.getUsuarioPorId(idUsuario);
+                Sessao sessao = sessaoService.getSessaoPorId(idSessao);
+                Area area = areaService.getAreaPorId(idArea);
+
+                Ingresso ingresso = ingressoFactory.criarIngressoComId(idIngresso, usuario, sessao, idArea, posicaoPoltrona);
+                ingressos.add(ingresso);
+            }
+        }
+
+        return ingressos;
     }
 }

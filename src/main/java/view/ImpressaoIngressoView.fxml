@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
+<BorderPane prefHeight="700" prefWidth="600" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ImpressaoIngressoController">
 
-</AnchorPane>
+    <center>
+        <VBox alignment="CENTER" prefHeight="700" prefWidth="600" spacing="10" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="20" />
+            </padding>
+
+            <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Ingressos disponíveis" />
+
+            <TableView fx:id="tabelaIngressos" prefHeight="550" prefWidth="560" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colId" prefWidth="39.0" text="ID" />
+                    <TableColumn fx:id="colArea" prefWidth="159.0" text="Área" />
+                    <TableColumn fx:id="colPosicaoPoltrona" prefWidth="83.0" text="Assento" />
+                    <TableColumn fx:id="colValorPago" prefWidth="167.0" text="Valor Pago" />
+               <TableColumn fx:id="colHorario" prefWidth="111.0" text="Duração" />
+                </columns>
+            </TableView>
+
+            <HBox alignment="CENTER" prefWidth="560" spacing="15">
+                <Button fx:id="btnVoltar" onAction="#handleVoltar" prefWidth="120" text="Voltar" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button fx:id="btnCancelar" onAction="#cancelarIngressoSelecionado" prefWidth="150" text="Cancelar Ingresso" />
+            </HBox>
+
+
+        </VBox>
+    </center>
+
+</BorderPane>

@@ -11,33 +11,20 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import model.Horario;
 import repository.Conexao;
-import repository.IngressoRepository;
 import service.*;
 import view.App;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class SelecaoCompraController implements Initializable {
 
-    @FXML private ToggleButton btnRomeuJulieta;
-    @FXML private ToggleButton btnAutoCompadecida;
-    @FXML private ToggleButton btnChapeuzinho;
-
-    @FXML private ToggleButton btnHorario1; // Manhã
-    @FXML private ToggleButton btnHorario2; // Tarde
-    @FXML private ToggleButton btnHorario3; // Noite
-
+    @FXML private ToggleButton btnRomeuJulieta, btnAutoCompadecida, btnChapeuzinho;
+    @FXML private ToggleButton btnHorario1, btnHorario2, btnHorario3;
     @FXML private VBox boxAreas;
-
-    @FXML private ToggleButton btnPlateiaA;
-    @FXML private ToggleButton btnPlateiaB;
-    @FXML private ToggleButton btnFrisa;
-    @FXML private ToggleButton btnCamarote;
-    @FXML private ToggleButton btnBalcaoNobre;
+    @FXML private ToggleButton btnPlateiaA, btnPlateiaB, btnFrisa, btnCamarote, btnBalcaoNobre;
 
     private PecaService pecaService;
     private HorarioService horarioService;
@@ -56,28 +43,26 @@ public class SelecaoCompraController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        pecaService = new PecaService(Conexao.getConexao());
-        horarioService = new HorarioService(Conexao.getConexao());
-        sessaoService = new SessaoService(Conexao.getConexao(), pecaService, horarioService);
-        areaService = new AreaService(Conexao.getConexao());
-        usuarioService = new UsuarioService(Conexao.getConexao(), new EnderecoService(Conexao.getConexao()));
         try {
-            ingressoService = new IngressoService(new IngressoRepository(Conexao.getConexao(), usuarioService, sessaoService, areaService), areaService.getTodasAreas());
+            var conexao = Conexao.getConexao();
+            pecaService = new PecaService(conexao);
+            horarioService = new HorarioService(conexao);
+            sessaoService = new SessaoService(conexao, pecaService, horarioService);
+            areaService = new AreaService(conexao);
+            usuarioService = new UsuarioService(conexao, new EnderecoService(conexao));
+            ingressoService = new IngressoService(new repository.IngressoRepository(conexao, usuarioService, sessaoService, areaService), areaService.getTodasAreas());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        // Grupo peças
         btnRomeuJulieta.setToggleGroup(grupoPecas);
         btnAutoCompadecida.setToggleGroup(grupoPecas);
         btnChapeuzinho.setToggleGroup(grupoPecas);
 
-        // Grupo horários
         btnHorario1.setToggleGroup(grupoHorarios);
         btnHorario2.setToggleGroup(grupoHorarios);
         btnHorario3.setToggleGroup(grupoHorarios);
 
-        // Grupo áreas
         btnPlateiaA.setToggleGroup(grupoAreas);
         btnPlateiaB.setToggleGroup(grupoAreas);
         btnFrisa.setToggleGroup(grupoAreas);
@@ -95,7 +80,6 @@ public class SelecaoCompraController implements Initializable {
                 else if (sel == btnChapeuzinho) idPecaSelecionada = 3;
 
                 mostrarHorariosPorPeca(idPecaSelecionada);
-
                 grupoHorarios.selectToggle(null);
                 idHorarioSelecionado = -1;
 
@@ -116,12 +100,10 @@ public class SelecaoCompraController implements Initializable {
                 else if (sel == btnHorario3) idHorarioSelecionado = 3;
 
                 mostrarTodasAreas();
-
                 grupoAreas.selectToggle(null);
                 idAreaSelecionada = -1;
             } else {
                 idHorarioSelecionado = -1;
-
                 esconderTodasAreas();
                 grupoAreas.selectToggle(null);
                 idAreaSelecionada = -1;
@@ -143,10 +125,7 @@ public class SelecaoCompraController implements Initializable {
     }
 
     private void mostrarHorariosPorPeca(int idPeca) {
-        // Pega ids dos horários da peça
         List<Integer> horariosIds = sessaoService.getHorariosPorPeca(idPeca);
-
-        // Deixa os 3 botões horários invisíveis inicialmente
         esconderTodosHorarios();
 
         for (int id : horariosIds) {
@@ -156,18 +135,22 @@ public class SelecaoCompraController implements Initializable {
             String turno = h.getTurno();
             String texto = turno + " " + formatarHorario(h);
 
-            if (turno.equalsIgnoreCase("Manhã")) {
-                btnHorario1.setText(texto);
-                btnHorario1.setVisible(true);
-                btnHorario1.setDisable(false);
-            } else if (turno.equalsIgnoreCase("Tarde")) {
-                btnHorario2.setText(texto);
-                btnHorario2.setVisible(true);
-                btnHorario2.setDisable(false);
-            } else if (turno.equalsIgnoreCase("Noite")) {
-                btnHorario3.setText(texto);
-                btnHorario3.setVisible(true);
-                btnHorario3.setDisable(false);
+            switch (turno.toLowerCase()) {
+                case "manhã" -> {
+                    btnHorario1.setText(texto);
+                    btnHorario1.setVisible(true);
+                    btnHorario1.setDisable(false);
+                }
+                case "tarde" -> {
+                    btnHorario2.setText(texto);
+                    btnHorario2.setVisible(true);
+                    btnHorario2.setDisable(false);
+                }
+                case "noite" -> {
+                    btnHorario3.setText(texto);
+                    btnHorario3.setVisible(true);
+                    btnHorario3.setDisable(false);
+                }
             }
         }
     }
@@ -238,11 +221,10 @@ public class SelecaoCompraController implements Initializable {
 
         System.out.printf("Compra: Peça %d, Horário %d, Área %d\n", idPecaSelecionada, horarioCorreto, idAreaSelecionada);
 
-        Connection conexao = Conexao.getConexao();
-
         SelecaoAssentoController.escolherAssento(horarioCorreto, idAreaSelecionada, idPecaSelecionada, App.rootPane,
                 pecaService, horarioService, areaService, sessaoService, ingressoService);
     }
+
     @FXML
     private void voltar(ActionEvent event) {
         try {

@@ -2,6 +2,9 @@ package model.ingresso;
 
 import model.*;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public abstract class Ingresso {
     protected int idIngresso;
     protected Usuario usuario;
@@ -61,4 +64,8 @@ public abstract class Ingresso {
                 ", Valor: " + valorPago;
     }
 
+    public String getValorPagoFormatado(){
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        return nf.format(this.valorPago);
+    }
 }

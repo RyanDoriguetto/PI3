@@ -5,19 +5,26 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaInicialController">
+<VBox alignment="CENTER" spacing="25.0" prefWidth="600" prefHeight="700"
+      xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.TelaInicialController">
+
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40"/>
+    </padding>
 
     <children>
-        <Label text="Bem-vindo ao Teatro ABC!" />
+        <Label text="Bem-vindo ao Teatro ABC!" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
 
-        <ImageView fx:id="imagemTeatro" fitWidth="400" fitHeight="200" preserveRatio="true" />
+        <ImageView fx:id="imagemTeatro" fitWidth="500" fitHeight="250" preserveRatio="true" />
 
-        <Label fx:id="imagemErro" text="Imagem não encontrada" visible="false" />
+        <Label fx:id="imagemErro" text="Imagem não encontrada" visible="false" style="-fx-text-fill: red;" />
 
-        <Button fx:id="btnCadastro" text="Cadastrar usuário" onAction="#handleCadastro"/>
-        <Button fx:id="btnComprar" text="Comprar ingresso" onAction="#handleCompraIngresso"/>
-        <Button fx:id="btnImprimir" text="Imprimir ingresso" />
-        <Button fx:id="btnEstatisticas" text="Estatística de Vendas" />
+        <VBox spacing="15" alignment="CENTER" fillWidth="true">
+            <Button fx:id="btnCadastro" text="Cadastrar usuário" onAction="#handleCadastro" prefWidth="300" prefHeight="40" />
+            <Button fx:id="btnComprar" text="Comprar ingresso" onAction="#handleCompraIngresso" prefWidth="300" prefHeight="40" />
+            <Button fx:id="btnImprimir" text="Imprimir ingresso" onAction="#handleImpressaoIngresso" prefWidth="300" prefHeight="40" />
+            <Button fx:id="btnEstatisticas" text="Estatística de Vendas" onAction="#handleEstatistica" prefWidth="300" prefHeight="40" />
+        </VBox>
     </children>
 </VBox>

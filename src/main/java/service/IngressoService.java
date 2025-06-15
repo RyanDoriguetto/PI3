@@ -43,6 +43,11 @@ public class IngressoService {
         return ingressosAgrupadosPorSessao;
     }
 
+    public void cancelarIngresso(int idIngresso) throws SQLException {
+        ingressoRepo.deletarIngresso(idIngresso);
+        ingressosMap.remove(idIngresso);
+    }
+
     public List<String> getPoltronasReservadas(int idSessao, int idArea) {
         return ingressoRepo.getPoltronasReservadas(idSessao, idArea);
     }
@@ -60,4 +65,9 @@ public class IngressoService {
 
         return ingresso;
     }
+
+    public List<Ingresso> buscarPorUsuario(Usuario usuario) throws SQLException {
+        return ingressoRepo.buscarIngressosPorUsuario(usuario.getIdUsuario());
+    }
+
 }

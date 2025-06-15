@@ -65,7 +65,6 @@ public class TelaInicialController {
         dialog.setHeaderText("Digite seu CPF para prosseguir:");
         dialog.setContentText("CPF:");
 
-        // Máscara em tempo real
         TextField input = dialog.getEditor();
         input.textProperty().addListener((obs, oldVal, newVal) -> {
             input.setText(UsuarioUtil.aplicarMascaraCPF(newVal));
@@ -104,5 +103,29 @@ public class TelaInicialController {
                 }
             }
         });
+    }
+
+    @FXML
+    public void handleImpressaoIngresso() {
+        try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/view/ImpressaoIngressoView.fxml"));
+            javafx.scene.Parent root = loader.load();
+            App.rootPane.getChildren().setAll(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+            new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR, "Erro ao carregar tela de impressão do ingresso.").showAndWait();
+        }
+    }
+
+    @FXML
+    public void handleEstatistica() {
+        try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/view/EstatisticaView.fxml"));
+            javafx.scene.Parent root = loader.load();
+            App.rootPane.getChildren().setAll(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+            new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR, "Erro ao carregar tela de Estatísticas.").showAndWait();
+        }
     }
 }
