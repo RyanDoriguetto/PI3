@@ -39,4 +39,32 @@ public class SessaoRepository {
         }
         return sessoesMap;
     }
+
+    public Sessao buscarSessaoPorHorarioEPeca(int idHorario, int idPeca) {
+        String sql = "SELECT * FROM sessao WHERE id_horario = ? AND id_peca = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idHorario);
+            stmt.setInt(2, idPeca);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) { // tem que chamar isso antes de ler os dados
+                    System.out.println("Sessao encontrada: id_sessao=" + rs.getInt("id_sessao") +
+                            ", id_peca=" + rs.getInt("id_peca") +
+                            ", id_horario=" + rs.getInt("id_horario"));
+                    return new Sessao(
+                            rs.getInt("id_sessao"),
+                            pecaService.getPecaPorId(rs.getInt("id_peca")),
+                            horarioService.getHorarioPorId(rs.getInt("id_horario"))
+                    );
+                } else {
+                    System.out.println("Nenhuma sessão encontrada para id_horario=" + idHorario + " e id_peca=" + idPeca);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

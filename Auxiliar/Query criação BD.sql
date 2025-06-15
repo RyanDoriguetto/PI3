@@ -105,3 +105,7 @@ ADD COLUMN assentos_por_subarea INT DEFAULT 0;
 
 UPDATE area SET qtd_subareas = 6, assentos_por_subarea = 5 WHERE id_area = 3;
 UPDATE area SET qtd_subareas = 5, assentos_por_subarea = 10 WHERE id_area = 4;
+
+use pi2025;
+
+ALTER TABLE ingresso MODIFY COLUMN posicaoPoltrona VARCHAR(10) NOT NULL;

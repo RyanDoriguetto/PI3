@@ -1,8 +1,12 @@
 package service;
 
+import factory.IngressoFactory;
+import model.Area;
+import model.Usuario;
 import model.Sessao;
 import model.ingresso.Ingresso;
 import repository.IngressoRepository;
+import repository.Conexao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,9 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 public class IngressoService {
+    private IngressoRepository ingressoRepo;
     private Map<Integer, Ingresso> ingressosMap;
+    private Map<Integer, Area> areasMap;
 
-    public IngressoService(IngressoRepository ingressoRepo) throws SQLException {
+    public IngressoService(IngressoRepository ingressoRepo, Map<Integer, Area> areasMap) throws SQLException {
+        this.ingressoRepo = ingressoRepo;
+        this.areasMap = areasMap;
         this.ingressosMap = ingressoRepo.buscarTodosIngressos();
     }
 
@@ -33,5 +41,23 @@ public class IngressoService {
                     .add(ingresso);
         }
         return ingressosAgrupadosPorSessao;
+    }
+
+    public List<String> getPoltronasReservadas(int idSessao, int idArea) {
+        return ingressoRepo.getPoltronasReservadas(idSessao, idArea);
+    }
+
+
+    public Ingresso criarIngresso(Usuario usuario, Sessao sessao, int idArea, String assento) throws SQLException {
+        AreaService areaService = new AreaService(Conexao.getConexao());
+
+        IngressoFactory factory = new IngressoFactory(areaService.getTodasAreas());
+        Ingresso ingresso = factory.criarIngresso(usuario, sessao, idArea, assento);
+
+        ingressoRepo.salvarIngresso(ingresso);
+
+        ingressosMap.put(ingresso.getIdIngresso(), ingresso);
+
+        return ingresso;
     }
 }

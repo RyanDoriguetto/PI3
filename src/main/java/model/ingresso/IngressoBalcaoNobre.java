@@ -4,7 +4,7 @@ import model.*;
 
 public class IngressoBalcaoNobre extends Ingresso{
 
-    public IngressoBalcaoNobre(int idIngresso, Usuario usuario, Sessao sessao, Area area, int posicaoPoltrona) {
+    public IngressoBalcaoNobre(int idIngresso, Usuario usuario, Sessao sessao, Area area, String posicaoPoltrona) {
         super(idIngresso, usuario, sessao, area, posicaoPoltrona);
         this.valorPago = area.getPreco();
     }

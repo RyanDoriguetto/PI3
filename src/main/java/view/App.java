@@ -8,10 +8,12 @@ import javafx.scene.image.Image;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.Usuario;
 
 public class App extends Application {
 
     public static VBox rootPane;
+    private static Usuario usuarioLogado;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -30,6 +32,14 @@ public class App extends Application {
         primaryStage.setTitle("Sistema de Teatro");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public static void setUsuarioLogado(Usuario usuario) {
+        usuarioLogado = usuario;
+    }
+
+    public static Usuario getUsuarioLogado() {
+        return usuarioLogado;
     }
 
     public static void main(String[] args) {

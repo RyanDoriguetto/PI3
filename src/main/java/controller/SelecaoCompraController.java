@@ -2,6 +2,7 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -10,17 +11,17 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import model.Horario;
 import repository.Conexao;
-import service.AreaService;
-import service.HorarioService;
-import service.PecaService;
-import service.SessaoService;
+import repository.IngressoRepository;
+import service.*;
 import view.App;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class CompraIngressoController implements Initializable {
+public class SelecaoCompraController implements Initializable {
 
     @FXML private ToggleButton btnRomeuJulieta;
     @FXML private ToggleButton btnAutoCompadecida;
@@ -42,6 +43,8 @@ public class CompraIngressoController implements Initializable {
     private HorarioService horarioService;
     private SessaoService sessaoService;
     private AreaService areaService;
+    private UsuarioService usuarioService;
+    private IngressoService ingressoService;
 
     private ToggleGroup grupoPecas = new ToggleGroup();
     private ToggleGroup grupoHorarios = new ToggleGroup();
@@ -57,6 +60,12 @@ public class CompraIngressoController implements Initializable {
         horarioService = new HorarioService(Conexao.getConexao());
         sessaoService = new SessaoService(Conexao.getConexao(), pecaService, horarioService);
         areaService = new AreaService(Conexao.getConexao());
+        usuarioService = new UsuarioService(Conexao.getConexao(), new EnderecoService(Conexao.getConexao()));
+        try {
+            ingressoService = new IngressoService(new IngressoRepository(Conexao.getConexao(), usuarioService, sessaoService, areaService), areaService.getTodasAreas());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         // Grupo peças
         btnRomeuJulieta.setToggleGroup(grupoPecas);
@@ -225,19 +234,19 @@ public class CompraIngressoController implements Initializable {
             return;
         }
 
-        int horarioCorreto = idHorarioSelecionado;
-        if (idPecaSelecionada == 2) horarioCorreto += 3;
-        else if (idPecaSelecionada == 3) horarioCorreto += 6;
+        int horarioCorreto = (idHorarioSelecionado - 1) * 3 + idPecaSelecionada;
 
         System.out.printf("Compra: Peça %d, Horário %d, Área %d\n", idPecaSelecionada, horarioCorreto, idAreaSelecionada);
 
-        // Aqui continuaria o resto da lógica para escolher assento, abrir próxima tela, etc
-    }
+        Connection conexao = Conexao.getConexao();
 
+        SelecaoAssentoController.escolherAssento(horarioCorreto, idAreaSelecionada, idPecaSelecionada, App.rootPane,
+                pecaService, horarioService, areaService, sessaoService, ingressoService);
+    }
     @FXML
     private void voltar(ActionEvent event) {
         try {
-            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/view/TelaInicialView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TelaInicialView.fxml"));
             javafx.scene.Parent root = loader.load();
             App.rootPane.getChildren().setAll(root);
         } catch (Exception e) {

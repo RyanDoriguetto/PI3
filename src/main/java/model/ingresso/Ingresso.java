@@ -6,11 +6,11 @@ public abstract class Ingresso {
     protected int idIngresso;
     protected Usuario usuario;
     protected Sessao sessao;
-    protected int posicaoPoltrona;
+    protected String posicaoPoltrona;
     protected int valorPago;
     protected Area area;
 
-    public Ingresso(int idIngresso, Usuario usuario, Sessao sessao, Area area, int posicaoPoltrona) {
+    public Ingresso(int idIngresso, Usuario usuario, Sessao sessao, Area area, String posicaoPoltrona) {
         this.idIngresso = idIngresso;
         this.usuario = usuario;
         this.sessao = sessao;
@@ -18,7 +18,7 @@ public abstract class Ingresso {
         this.posicaoPoltrona = posicaoPoltrona;
     }
 
-    public Ingresso(Usuario usuario, Sessao sessao, Area area, int posicaoPoltrona) {
+    public Ingresso(Usuario usuario, Sessao sessao, Area area, String posicaoPoltrona) {
         this.usuario = usuario;
         this.sessao = sessao;
         this.area = area;
@@ -45,7 +45,7 @@ public abstract class Ingresso {
         return sessao;
     }
 
-    public int getPosicaoPoltrona() {
+    public String getPosicaoPoltrona() {
         return posicaoPoltrona;
     }
 

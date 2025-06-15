@@ -28,6 +28,10 @@ public class SessaoService {
         }
     }
 
+    public Sessao buscarSessaoPorHorarioEPeca(int idHorario, int idPeca) {
+        return sessaoRepo.buscarSessaoPorHorarioEPeca(idHorario, idPeca);
+    }
+
     public Sessao getSessaoPorId(int id) {
         return sessoesMap.get(id);
     }

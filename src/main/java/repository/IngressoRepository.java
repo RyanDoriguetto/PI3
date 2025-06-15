@@ -6,7 +6,9 @@ import model.ingresso.Ingresso;
 import service.*;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class IngressoRepository {
@@ -37,17 +39,35 @@ public class IngressoRepository {
                 int idUsuario = rs.getInt("id_usuario");
                 int idSessao = rs.getInt("id_sessao");
                 int idArea = rs.getInt("id_area");
-                int posicaoPoltrona = rs.getInt("posicaoPoltrona");
+                String posicaoPoltrona = rs.getString("posicaoPoltrona");
 
                 Usuario usuario = usuarioService.getUsuarioPorId(idUsuario);
                 Sessao sessao = sessaoService.getSessaoPorId(idSessao);
                 Area area = areaService.getAreaPorId(idArea);
 
-                Ingresso ingresso = ingressoFactory.criarIngresso(id, usuario, sessao, idArea, posicaoPoltrona);
+                Ingresso ingresso = ingressoFactory.criarIngressoComId(id, usuario, sessao, idArea, posicaoPoltrona);
                 ingressosMap.put(id, ingresso);
             }
         }
         return ingressosMap;
+    }
+
+    public List<String> getPoltronasReservadas(int idSessao, int idArea) {
+        List<String> reservadas = new ArrayList<>();
+        String sql = "SELECT posicaoPoltrona FROM ingresso WHERE id_sessao = ? AND id_area = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idSessao);
+            stmt.setInt(2, idArea);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                reservadas.add(rs.getString("posicaoPoltrona"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return reservadas;
     }
 
     public void salvarIngresso(Ingresso ingresso) throws SQLException {
@@ -57,7 +77,7 @@ public class IngressoRepository {
             ps.setInt(1, ingresso.getUsuario().getIdUsuario());
             ps.setInt(2, ingresso.getSessao().getIdSessao());
             ps.setInt(3, ingresso.getArea().getIdArea());
-            ps.setInt(4, ingresso.getPosicaoPoltrona());
+            ps.setString(4, ingresso.getPosicaoPoltrona());
             ps.setInt(5, ingresso.getValorPago());
 
             ps.executeUpdate();

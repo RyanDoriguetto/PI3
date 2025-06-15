@@ -41,4 +41,14 @@ public class UsuarioService {
         Usuario usuario = new Usuario(0, endereco, nome, cpf, telefone, dataNasc);
         usuarioRepo.salvarUsuario(usuario);
     }
+
+    public Usuario buscarPorCpf(String cpf) {
+        for (Usuario usuario : usuariosMap.values()) {
+            if (usuario.getCpf().equals(cpf)) {
+                return usuario;
+            }
+        }
+        return null;
+    }
+
 }

@@ -30,4 +30,5 @@ public class Sessao {
                 "  Peça: " + peca.toString().replaceAll("(?m)^", "    ") + "\n" +
                 "  Horário: " + horario.toString().replaceAll("(?m)^", "    ");
     }
+
 }
