@@ -9,8 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import model.ingresso.Ingresso;
 import model.Usuario;
 import repository.Conexao;
@@ -31,6 +29,7 @@ public class ImpressaoIngressoController implements Initializable {
     @FXML
     private TableView<Ingresso> tabelaIngressos;
     @FXML private TableColumn<Ingresso, Integer> colId;
+    @FXML private TableColumn<Ingresso, String> colPeca;
     @FXML private TableColumn<Ingresso, String> colHorario;
     @FXML private TableColumn<Ingresso, String> colArea;
     @FXML private TableColumn<Ingresso, String> colPosicaoPoltrona;
@@ -52,7 +51,7 @@ public class ImpressaoIngressoController implements Initializable {
 
             EnderecoService enderecoService = new EnderecoService(conexao);
             usuarioService = new UsuarioService(conexao, enderecoService);
-            sessaoService = new SessaoService(conexao, new PecaService(Conexao.getConexao()), new HorarioService(Conexao.getConexao()));
+            sessaoService = new SessaoService(conexao, new PecaService(conexao), new HorarioService(conexao));
             areaService = new AreaService(conexao);
             ingressoService = new IngressoService(
                     new IngressoRepository(conexao, usuarioService, sessaoService, areaService),
@@ -121,6 +120,9 @@ public class ImpressaoIngressoController implements Initializable {
 
         colId.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getIdIngresso()).asObject());
 
+        colPeca.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getSessao().getPeca().getNome()));
+
         colArea.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getArea().getNome()));
 
@@ -132,9 +134,10 @@ public class ImpressaoIngressoController implements Initializable {
 
         colHorario.setCellValueFactory(cellData -> {
             var sessao = cellData.getValue().getSessao();
-            String horarioCompleto = sessao.getHorario().getHoraFim() + " - " + sessao.getHorario().getHoraFim();
+            String horarioCompleto = sessao.getHorario().getHoraInicio() + " - " + sessao.getHorario().getHoraFim();
             return new SimpleStringProperty(horarioCompleto);
         });
+
         ingressosObservable.setAll(ingressos);
         tabelaIngressos.setItems(ingressosObservable);
     }

@@ -9,6 +9,10 @@
       fx:controller="controller.CadastroUsuarioController"
       spacing="10">
 
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
     <children>
         <Label text="Nome:" />
         <TextField fx:id="nomeField" prefWidth="300" />
@@ -38,9 +42,11 @@
         <TextField fx:id="cidadeField" prefWidth="300" />
 
         <Label text="Estado:" />
-        <TextField fx:id="estadoField" prefWidth="300" />
+        <ComboBox fx:id="estadoComboBox" prefWidth="300" />
 
-        <Button text="Salvar" onAction="#salvarUsuario" prefWidth="140" />
-        <Button text="Voltar" onAction="#voltarTelaInicial" prefWidth="140" />
+        <HBox spacing="10">
+            <Button text="Salvar" onAction="#salvarUsuario" prefWidth="140" />
+            <Button text="Voltar" onAction="#voltarTelaInicial" prefWidth="140" />
+        </HBox>
     </children>
 </VBox>

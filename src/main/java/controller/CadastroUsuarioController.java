@@ -37,10 +37,18 @@ public class CadastroUsuarioController {
     @FXML
     private TextField cidadeField;
     @FXML
-    private TextField estadoField;
+    private ComboBox<String> estadoComboBox;
 
     @FXML
     public void initialize() {
+        estadoComboBox.getItems().addAll(
+                "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO",
+                "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI",
+                "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"
+        );
+
+        estadoComboBox.setValue("GO");
+
         cpfField.textProperty().addListener((obs, oldVal, newVal) -> {
             String formatted = UsuarioUtil.aplicarMascaraCPF(newVal);
             cpfField.setText(formatted);
@@ -67,6 +75,10 @@ public class CadastroUsuarioController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate dataNasc = LocalDate.parse(dataStr, formatter);
 
+            if (dataNasc.isAfter(LocalDate.now())) {
+                throw new IllegalArgumentException("A data de nascimento não pode ser futura.");
+            }
+
             String cpfLimpo = cpfField.getText().replaceAll("[^0-9]", "");
             if (!UsuarioUtil.validarCpf(cpfLimpo)) throw new IllegalArgumentException("CPF inválido");
 
@@ -76,7 +88,7 @@ public class CadastroUsuarioController {
                     loteField.getText(),
                     bairroField.getText(),
                     cidadeField.getText(),
-                    estadoField.getText()
+                    estadoComboBox.getValue()
             );
 
             Connection conexao = Conexao.getConexao();
